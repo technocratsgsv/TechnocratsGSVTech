@@ -1,22 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>Cryptonx'26</title>
+  <title>TechnoCrats GSV</title>
   <meta charset="UTF-8" />
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Sekuya&family=JetBrains+Mono:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Sekuya&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
     :root {
-      --cx-bg: #0D0F0E;
-      --cx-card-border: rgba(184, 148, 82, 0.25);
-      --cx-heading: #F1EEE6;
-      --cx-red: #D04A3A;
-      --cx-gold: #B89452;
+      --tc-bg: #0D0F0E;
+      --tc-border: rgba(184, 148, 82, 0.25);
+      --tc-heading: #F1EEE6;
+      --tc-red: #D04A3A;
+      --tc-gold: #B89452;
+      --tc-muted: rgba(241, 238, 230, 0.45);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       width: 400px;
       height: 200px;
@@ -24,84 +29,347 @@
     }
 
     body {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: var(--cx-bg);
+
+      background-color: var(--tc-bg);
+
       background-image:
-        repeating-linear-gradient(0deg, rgba(208, 74, 58, 0.06) 0px, rgba(208, 74, 58, 0.06) 1px, transparent 1px, transparent 20px),
-        repeating-linear-gradient(90deg, rgba(208, 74, 58, 0.06) 0px, rgba(208, 74, 58, 0.06) 1px, transparent 1px, transparent 20px);
-      position: relative;
+        repeating-linear-gradient(
+          0deg,
+          rgba(208, 74, 58, 0.045) 0px,
+          rgba(208, 74, 58, 0.045) 1px,
+          transparent 1px,
+          transparent 20px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          rgba(208, 74, 58, 0.045) 0px,
+          rgba(208, 74, 58, 0.045) 1px,
+          transparent 1px,
+          transparent 20px
+        );
+
       font-family: 'JetBrains Mono', monospace;
+      color: var(--tc-heading);
     }
 
-    .cx-frame {
+    /* =========================
+       FRAME
+    ========================= */
+
+    .tc-frame {
       position: absolute;
       inset: 6px;
-      border: 1px solid var(--cx-card-border);
+
+      border: 1px solid var(--tc-border);
       border-radius: 10px;
+
+      pointer-events: none;
     }
 
-    .cx-corner {
+    .tc-frame::before,
+    .tc-frame::after {
+      content: "";
       position: absolute;
+
+      width: 28px;
+      height: 28px;
+
+      border-color: var(--tc-gold);
+      opacity: 0.5;
+    }
+
+    .tc-frame::before {
+      top: -1px;
+      left: -1px;
+
+      border-top: 1px solid;
+      border-left: 1px solid;
+      border-radius: 10px 0 0 0;
+    }
+
+    .tc-frame::after {
+      right: -1px;
+      bottom: -1px;
+
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+      border-radius: 0 0 10px 0;
+    }
+
+    /* =========================
+       CORNER SYMBOLS
+    ========================= */
+
+    .tc-corner {
+      position: absolute;
+
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
-      opacity: 0.55;
+
+      user-select: none;
     }
 
-    .cx-tl { top: 10px; left: 14px; font-size: 15px; color: var(--cx-red); }
-    .cx-br { bottom: 10px; right: 14px; font-size: 15px; color: var(--cx-gold); }
-    .cx-tr { top: 12px; right: 16px; font-size: 11px; color: var(--cx-gold); opacity: 0.4; }
-    .cx-bl { bottom: 13px; left: 16px; font-size: 11px; color: var(--cx-red); opacity: 0.4; }
+    .tc-tl {
+      top: 10px;
+      left: 14px;
 
-    .cx-content {
+      font-size: 14px;
+      color: var(--tc-red);
+      opacity: 0.7;
+    }
+
+    .tc-tr {
+      top: 11px;
+      right: 15px;
+
+      font-size: 11px;
+      color: var(--tc-gold);
+      opacity: 0.45;
+    }
+
+    .tc-bl {
+      bottom: 11px;
+      left: 15px;
+
+      font-size: 11px;
+      color: var(--tc-red);
+      opacity: 0.45;
+    }
+
+    .tc-br {
+      right: 14px;
+      bottom: 10px;
+
+      font-size: 14px;
+      color: var(--tc-gold);
+      opacity: 0.7;
+    }
+
+    /* =========================
+       MAIN CONTENT
+    ========================= */
+
+    .tc-content {
       position: relative;
-      z-index: 1;
+      z-index: 2;
+
       text-align: center;
-      padding: 0 30px;
+      margin-top: -5px;
     }
 
-    .cx-tag {
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: var(--cx-red);
-      margin-bottom: 8px;
+    .tc-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+
+      margin-bottom: 9px;
+
+      font-size: 8px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+
+      color: var(--tc-muted);
     }
 
-    .cx-tag::before { content: "< "; color: var(--cx-gold); }
-    .cx-tag::after { content: " />"; color: var(--cx-gold); }
+    .tc-status-dot {
+      width: 5px;
+      height: 5px;
+
+      border-radius: 50%;
+      background: var(--tc-red);
+
+      box-shadow: 0 0 8px rgba(208, 74, 58, 0.7);
+    }
 
     h1 {
       margin: 0;
-      font-family: 'Sekuya', 'Montserrat', sans-serif;
+
+      font-family: 'Sekuya', sans-serif;
+      font-size: 24px;
       font-weight: 400;
-      font-size: 25px;
-      letter-spacing: -0.5px;
-      line-height: 1.15;
-      color: var(--cx-heading);
+
+      line-height: 1.1;
+      letter-spacing: -0.8px;
+
+      color: var(--tc-heading);
+
+      text-shadow:
+        0 0 25px rgba(184, 148, 82, 0.08);
     }
 
-    .cx-cursor {
-      display: inline-block;
-      width: 3px;
-      height: 0.85em;
-      vertical-align: -0.1em;
-      background: var(--cx-red);
-      margin-left: 3px;
+    .tc-subtitle {
+      margin-top: 9px;
+
+      font-size: 8px;
+      letter-spacing: 1.8px;
+
+      color: var(--tc-gold);
+      opacity: 0.7;
+
+      text-transform: uppercase;
     }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .tc-footer {
+      position: absolute;
+      z-index: 3;
+
+      left: 0;
+      right: 0;
+      bottom: 12px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 13px;
+    }
+
+    .tc-footer::before {
+      content: "";
+      position: absolute;
+
+      top: -8px;
+
+      width: 90px;
+      height: 1px;
+
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--tc-border),
+        transparent
+      );
+    }
+
+    .tc-social {
+      position: relative;
+
+      color: var(--tc-muted);
+      text-decoration: none;
+
+      font-size: 8px;
+      letter-spacing: 1px;
+
+      transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .tc-social:hover {
+      color: var(--tc-gold);
+      transform: translateY(-1px);
+    }
+
+    .tc-social:not(:last-child)::after {
+      content: "/";
+      position: absolute;
+
+      right: -9px;
+
+      color: rgba(184, 148, 82, 0.25);
+    }
+
+    /* =========================
+       SIDE CODE
+    ========================= */
+
+    .tc-code {
+      position: absolute;
+
+      font-size: 7px;
+      letter-spacing: 1px;
+
+      color: var(--tc-muted);
+      opacity: 0.25;
+
+      writing-mode: vertical-rl;
+    }
+
+    .tc-code-left {
+      left: 10px;
+      top: 75px;
+    }
+
+    .tc-code-right {
+      right: 10px;
+      top: 75px;
+      transform: rotate(180deg);
+    }
+
   </style>
 </head>
 
 <body>
-  <span class="cx-corner cx-tl">&lt;/&gt;</span>
-  <span class="cx-corner cx-tr">{ }</span>
-  <span class="cx-corner cx-bl">;</span>
-  <span class="cx-corner cx-br">&lt;/&gt;</span>
-  <div class="cx-frame"></div>
 
-  <div class="cx-content">
-    <div class="cx-tag">status</div>
-    <h1>Something is<br />cooking!!!<span class="cx-cursor"></span></h1>
-  </div>
+  <!-- Decorative frame -->
+  <div class="tc-frame"></div>
+
+  <!-- Corner symbols -->
+  <span class="tc-corner tc-tl">&lt;/&gt;</span>
+  <span class="tc-corner tc-tr">{ }</span>
+  <span class="tc-corner tc-bl">;</span>
+  <span class="tc-corner tc-br">&lt;/&gt;</span>
+
+  <!-- Side details -->
+  <span class="tc-code tc-code-left">TECHNOCRATS.GSV</span>
+  <span class="tc-code tc-code-right">CRYPTONX_26</span>
+
+  <!-- Main -->
+  <main class="tc-content">
+
+    <div class="tc-status">
+      <span class="tc-status-dot"></span>
+      SYSTEM ONLINE
+    </div>
+
+    <h1>TechnoCrats GSV</h1>
+
+    <div class="tc-subtitle">
+      Building · Breaking · Innovating
+    </div>
+
+  </main>
+
+  <!-- Social footer -->
+  <footer class="tc-footer">
+
+    <a
+      class="tc-social"
+      href="https://www.instagram.com/technocrats_gsv/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      INSTAGRAM
+    </a>
+
+    <a
+      class="tc-social"
+      href="https://www.linkedin.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      LINKEDIN
+    </a>
+
+    <a
+      class="tc-social"
+      href="https://github.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      GITHUB
+    </a>
+
+  </footer>
+
 </body>
 </html>
