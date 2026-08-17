@@ -1,19 +1,24 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>TechnoCrats GSV</title>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechnoCrats GSV</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sekuya&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Sekuya&family=JetBrains+Mono:wght@400;500;700&display=swap');
-
     :root {
-      --tc-bg: #0D0F0E;
-      --tc-border: rgba(184, 148, 82, 0.25);
-      --tc-heading: #F1EEE6;
-      --tc-red: #D04A3A;
-      --tc-gold: #B89452;
-      --tc-muted: rgba(241, 238, 230, 0.45);
+      --tc-bg: #0d0f0e;
+      --tc-grid: rgba(208, 74, 58, 0.055);
+      --tc-border: rgba(184, 148, 82, 0.28);
+      --tc-heading: #f1eee6;
+      --tc-red: #d04a3a;
+      --tc-gold: #b89452;
+      --tc-muted: rgba(241, 238, 230, 0.42);
     }
 
     * {
@@ -22,14 +27,19 @@
 
     html,
     body {
+      width: 100%;
+      height: 100%;
       margin: 0;
-      width: 400px;
-      height: 200px;
-      overflow: hidden;
+      padding: 0;
     }
 
     body {
       position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -39,33 +49,33 @@
       background-image:
         repeating-linear-gradient(
           0deg,
-          rgba(208, 74, 58, 0.045) 0px,
-          rgba(208, 74, 58, 0.045) 1px,
+          var(--tc-grid) 0px,
+          var(--tc-grid) 1px,
           transparent 1px,
-          transparent 20px
+          transparent 40px
         ),
         repeating-linear-gradient(
           90deg,
-          rgba(208, 74, 58, 0.045) 0px,
-          rgba(208, 74, 58, 0.045) 1px,
+          var(--tc-grid) 0px,
+          var(--tc-grid) 1px,
           transparent 1px,
-          transparent 20px
+          transparent 40px
         );
 
-      font-family: 'JetBrains Mono', monospace;
+      font-family: "JetBrains Mono", monospace;
       color: var(--tc-heading);
     }
 
-    /* =========================
-       FRAME
-    ========================= */
+    /* =========================================
+       OUTER FRAME
+    ========================================= */
 
     .tc-frame {
       position: absolute;
-      inset: 6px;
+      inset: 12px;
 
       border: 1px solid var(--tc-border);
-      border-radius: 10px;
+      border-radius: 16px;
 
       pointer-events: none;
     }
@@ -73,13 +83,14 @@
     .tc-frame::before,
     .tc-frame::after {
       content: "";
+
       position: absolute;
 
-      width: 28px;
-      height: 28px;
+      width: 70px;
+      height: 70px;
 
       border-color: var(--tc-gold);
-      opacity: 0.5;
+      opacity: 0.6;
     }
 
     .tc-frame::before {
@@ -88,7 +99,8 @@
 
       border-top: 1px solid;
       border-left: 1px solid;
-      border-radius: 10px 0 0 0;
+
+      border-radius: 16px 0 0 0;
     }
 
     .tc-frame::after {
@@ -97,149 +109,282 @@
 
       border-right: 1px solid;
       border-bottom: 1px solid;
-      border-radius: 0 0 10px 0;
+
+      border-radius: 0 0 16px 0;
     }
 
-    /* =========================
+    /* =========================================
        CORNER SYMBOLS
-    ========================= */
+    ========================================= */
 
     .tc-corner {
       position: absolute;
 
-      font-family: 'JetBrains Mono', monospace;
+      z-index: 5;
+
+      font-family: "JetBrains Mono", monospace;
       font-weight: 700;
 
       user-select: none;
+      pointer-events: none;
     }
 
     .tc-tl {
-      top: 10px;
-      left: 14px;
+      top: 28px;
+      left: 34px;
 
-      font-size: 14px;
       color: var(--tc-red);
-      opacity: 0.7;
+      font-size: clamp(16px, 1.8vw, 28px);
+
+      opacity: 0.75;
     }
 
     .tc-tr {
-      top: 11px;
-      right: 15px;
+      top: 28px;
+      right: 34px;
 
-      font-size: 11px;
       color: var(--tc-gold);
-      opacity: 0.45;
+      font-size: clamp(13px, 1.3vw, 21px);
+
+      opacity: 0.5;
     }
 
     .tc-bl {
-      bottom: 11px;
-      left: 15px;
+      bottom: 27px;
+      left: 34px;
 
-      font-size: 11px;
       color: var(--tc-red);
+      font-size: clamp(13px, 1.3vw, 21px);
+
       opacity: 0.45;
     }
 
     .tc-br {
-      right: 14px;
-      bottom: 10px;
+      right: 34px;
+      bottom: 27px;
 
-      font-size: 14px;
       color: var(--tc-gold);
-      opacity: 0.7;
+      font-size: clamp(16px, 1.8vw, 28px);
+
+      opacity: 0.75;
     }
 
-    /* =========================
-       MAIN CONTENT
-    ========================= */
+    /* =========================================
+       SIDE LABELS
+    ========================================= */
+
+    .tc-code {
+      position: absolute;
+
+      top: 50%;
+
+      z-index: 2;
+
+      font-size: clamp(7px, 0.65vw, 11px);
+      letter-spacing: 2px;
+
+      color: var(--tc-muted);
+
+      opacity: 0.3;
+
+      writing-mode: vertical-rl;
+
+      transform: translateY(-50%);
+    }
+
+    .tc-code-left {
+      left: 22px;
+    }
+
+    .tc-code-right {
+      right: 22px;
+
+      transform:
+        translateY(-50%)
+        rotate(180deg);
+    }
+
+    /* =========================================
+       CENTER CONTENT
+    ========================================= */
 
     .tc-content {
       position: relative;
-      z-index: 2;
+
+      z-index: 10;
+
+      width: min(90vw, 1200px);
 
       text-align: center;
-      margin-top: -5px;
     }
+
+    /* Status */
 
     .tc-status {
       display: flex;
+
       align-items: center;
       justify-content: center;
-      gap: 7px;
 
-      margin-bottom: 9px;
+      gap: 10px;
 
-      font-size: 8px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
+      margin-bottom: clamp(14px, 2vh, 24px);
 
       color: var(--tc-muted);
+
+      font-size: clamp(9px, 0.8vw, 14px);
+
+      letter-spacing: clamp(2px, 0.35vw, 5px);
+
+      text-transform: uppercase;
     }
 
     .tc-status-dot {
-      width: 5px;
-      height: 5px;
+      width: 7px;
+      height: 7px;
+
+      flex-shrink: 0;
 
       border-radius: 50%;
+
       background: var(--tc-red);
 
-      box-shadow: 0 0 8px rgba(208, 74, 58, 0.7);
+      box-shadow:
+        0 0 8px rgba(208, 74, 58, 0.8),
+        0 0 20px rgba(208, 74, 58, 0.25);
     }
+
+    /* =========================================
+       MAIN TITLE
+    ========================================= */
 
     h1 {
       margin: 0;
 
-      font-family: 'Sekuya', sans-serif;
-      font-size: 24px;
+      font-family: "Sekuya", sans-serif;
+
+      font-size: clamp(
+        34px,
+        6.2vw,
+        108px
+      );
+
       font-weight: 400;
 
-      line-height: 1.1;
-      letter-spacing: -0.8px;
+      line-height: 1;
+
+      letter-spacing: clamp(
+        -1px,
+        -0.15vw,
+        -3px
+      );
 
       color: var(--tc-heading);
 
+      text-transform: uppercase;
+
       text-shadow:
-        0 0 25px rgba(184, 148, 82, 0.08);
+        0 0 30px rgba(184, 148, 82, 0.08);
     }
+
+    /* =========================================
+       SUBTITLE
+    ========================================= */
 
     .tc-subtitle {
-      margin-top: 9px;
-
-      font-size: 8px;
-      letter-spacing: 1.8px;
+      margin-top: clamp(14px, 2vh, 24px);
 
       color: var(--tc-gold);
-      opacity: 0.7;
+
+      font-size: clamp(8px, 0.75vw, 13px);
+
+      letter-spacing: clamp(
+        2px,
+        0.35vw,
+        5px
+      );
 
       text-transform: uppercase;
+
+      opacity: 0.72;
     }
 
-    /* =========================
-       FOOTER
-    ========================= */
+    /* =========================================
+       DECORATIVE CENTER LINE
+    ========================================= */
 
-    .tc-footer {
-      position: absolute;
-      z-index: 3;
-
-      left: 0;
-      right: 0;
-      bottom: 12px;
-
+    .tc-line {
       display: flex;
+
       align-items: center;
       justify-content: center;
 
-      gap: 13px;
+      gap: 12px;
+
+      margin-top: clamp(20px, 3vh, 36px);
+    }
+
+    .tc-line span {
+      display: block;
+
+      width: clamp(30px, 5vw, 90px);
+      height: 1px;
+
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--tc-border)
+      );
+    }
+
+    .tc-line span:last-child {
+      background: linear-gradient(
+        90deg,
+        var(--tc-border),
+        transparent
+      );
+    }
+
+    .tc-line-dot {
+      width: 4px;
+      height: 4px;
+
+      border-radius: 50%;
+
+      background: var(--tc-gold);
+
+      opacity: 0.6;
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    .tc-footer {
+      position: absolute;
+
+      left: 0;
+      right: 0;
+      bottom: clamp(28px, 4vh, 50px);
+
+      z-index: 20;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: clamp(18px, 2.5vw, 40px);
     }
 
     .tc-footer::before {
       content: "";
+
       position: absolute;
 
-      top: -8px;
+      top: clamp(-18px, -2vh, -10px);
 
-      width: 90px;
+      width: clamp(80px, 12vw, 180px);
       height: 1px;
 
       background: linear-gradient(
@@ -254,76 +399,177 @@
       position: relative;
 
       color: var(--tc-muted);
+
       text-decoration: none;
 
-      font-size: 8px;
-      letter-spacing: 1px;
+      font-size: clamp(8px, 0.7vw, 12px);
+
+      letter-spacing: clamp(
+        1px,
+        0.2vw,
+        3px
+      );
 
       transition:
-        color 0.2s ease,
-        transform 0.2s ease;
+        color 0.25s ease,
+        transform 0.25s ease;
     }
 
     .tc-social:hover {
       color: var(--tc-gold);
-      transform: translateY(-1px);
+
+      transform: translateY(-2px);
     }
 
     .tc-social:not(:last-child)::after {
       content: "/";
+
       position: absolute;
 
-      right: -9px;
+      right: clamp(-14px, -1vw, -8px);
 
-      color: rgba(184, 148, 82, 0.25);
+      color: rgba(184, 148, 82, 0.3);
+
+      pointer-events: none;
     }
 
-    /* =========================
-       SIDE CODE
-    ========================= */
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
 
-    .tc-code {
-      position: absolute;
+    @media (max-width: 700px) {
 
-      font-size: 7px;
-      letter-spacing: 1px;
+      .tc-frame {
+        inset: 8px;
+        border-radius: 10px;
+      }
 
-      color: var(--tc-muted);
-      opacity: 0.25;
+      .tc-tl {
+        top: 18px;
+        left: 20px;
+      }
 
-      writing-mode: vertical-rl;
+      .tc-tr {
+        top: 18px;
+        right: 20px;
+      }
+
+      .tc-bl {
+        bottom: 18px;
+        left: 20px;
+      }
+
+      .tc-br {
+        right: 20px;
+        bottom: 18px;
+      }
+
+      .tc-code {
+        display: none;
+      }
+
+      .tc-content {
+        width: 92vw;
+      }
+
+      h1 {
+        font-size: clamp(
+          28px,
+          9vw,
+          60px
+        );
+
+        letter-spacing: -1px;
+      }
+
+      .tc-subtitle {
+        letter-spacing: 2px;
+      }
+
+      .tc-footer {
+        bottom: 28px;
+        gap: 16px;
+      }
     }
 
-    .tc-code-left {
-      left: 10px;
-      top: 75px;
+    @media (max-width: 420px) {
+
+      .tc-status {
+        font-size: 8px;
+        letter-spacing: 2px;
+      }
+
+      h1 {
+        font-size: clamp(
+          25px,
+          10vw,
+          42px
+        );
+      }
+
+      .tc-subtitle {
+        font-size: 7px;
+        letter-spacing: 1.5px;
+      }
+
+      .tc-social {
+        font-size: 7px;
+        letter-spacing: 1px;
+      }
     }
 
-    .tc-code-right {
-      right: 10px;
-      top: 75px;
-      transform: rotate(180deg);
-    }
+    /* =========================================
+       REDUCED MOTION
+    ========================================= */
 
+    @media (prefers-reduced-motion: reduce) {
+      .tc-social {
+        transition: none;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- Decorative frame -->
+  <!-- =======================================
+       FRAME
+  ======================================== -->
+
   <div class="tc-frame"></div>
 
-  <!-- Corner symbols -->
+  <!-- =======================================
+       CORNERS
+  ======================================== -->
+
   <span class="tc-corner tc-tl">&lt;/&gt;</span>
-  <span class="tc-corner tc-tr">{ }</span>
-  <span class="tc-corner tc-bl">;</span>
+
+  <span class="tc-corner tc-tr">
+    { }
+  </span>
+
+  <span class="tc-corner tc-bl">
+    ;
+  </span>
+
   <span class="tc-corner tc-br">&lt;/&gt;</span>
 
-  <!-- Side details -->
-  <span class="tc-code tc-code-left">TECHNOCRATS.GSV</span>
-  <span class="tc-code tc-code-right">CRYPTONX_26</span>
+  <!-- =======================================
+       SIDE IDENTIFIERS
+  ======================================== -->
 
-  <!-- Main -->
+  <span class="tc-code tc-code-left">
+    TECHN0CRATS.GSV
+  </span>
+
+  <span class="tc-code tc-code-right">
+    CRYPTONX_26
+  </span>
+
+  <!-- =======================================
+       CENTER
+  ======================================== -->
+
   <main class="tc-content">
 
     <div class="tc-status">
@@ -331,20 +577,31 @@
       SYSTEM ONLINE
     </div>
 
-    <h1>TechnoCrats GSV</h1>
+    <h1>
+      TechnoCrats GSV
+    </h1>
 
     <div class="tc-subtitle">
       Building · Breaking · Innovating
     </div>
 
+    <div class="tc-line">
+      <span></span>
+      <div class="tc-line-dot"></div>
+      <span></span>
+    </div>
+
   </main>
 
-  <!-- Social footer -->
+  <!-- =======================================
+       SOCIAL FOOTER
+  ======================================== -->
+
   <footer class="tc-footer">
 
     <a
       class="tc-social"
-      href="https://www.instagram.com/technocrats_gsv/"
+      href="https://www.instagram.com/"
       target="_blank"
       rel="noopener noreferrer"
     >
