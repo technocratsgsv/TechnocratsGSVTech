@@ -119,11 +119,79 @@
     .loading-progress {
       animation: loadPulse 2.5s steps(10) infinite;
     }
+
+    /* Cryptonx'26 Marquee Ticker */
+    .cx-marquee-bar {
+      background: repeating-linear-gradient(
+        45deg,
+        #161616,
+        #161616 12px,
+        #F4D53E 12px,
+        #F4D53E 24px
+      );
+    }
+    .cx-marquee-track {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: cxScroll 16s linear infinite;
+      will-change: transform;
+    }
+    @keyframes cxScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .cx-marquee-bar:hover .cx-marquee-track {
+      animation-play-state: paused;
+    }
+
+    /* CryptonX Taskbar Button Glow */
+    .cx-taskbar-btn {
+      position: relative;
+      animation: cxGlowPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes cxGlowPulse {
+      0%, 100% {
+        box-shadow: 2px 2px 0px 0px #161616, 0 0 4px 1px rgba(95, 191, 79, 0.5);
+      }
+      50% {
+        box-shadow: 2px 2px 0px 0px #161616, 0 0 14px 5px rgba(95, 191, 79, 0.95);
+      }
+    }
+    .cx-taskbar-btn:hover {
+      animation-play-state: paused;
+      box-shadow: 2px 2px 0px 0px #161616, 0 0 16px 6px rgba(95, 191, 79, 1);
+    }
   </style>
 </head>
 <body class=
 
 "font-vt relative pb-20 overflow-x-hidden selection:bg-retro-blue selection:text-retro-white">
+
+  <!-- CRYPTONX'26 LIVE MARQUEE -->
+  <a href="https://cryptonx.in" target="_blank" rel="noopener noreferrer"
+     class="cx-marquee-bar sticky top-0 z-[60] block w-full border-b-2 border-retro-black overflow-hidden">
+    <div class="bg-retro-charcoal/90 py-1.5">
+      <div class="cx-marquee-track">
+        <!-- Repeated twice back-to-back for seamless loop -->
+        <span class="flex items-center gap-3 px-4 font-pixel text-[10px] sm:text-[11px] text-retro-yellowHi tracking-widest">
+          <span class="inline-block w-2 h-2 bg-retro-greenLoad border border-retro-black animate-pulse"></span>
+          ★ CRYPTONX&apos;26 IS LIVE! ★ TAP TO EXPLORE →
+        </span>
+        <span class="flex items-center gap-3 px-4 font-pixel text-[10px] sm:text-[11px] text-retro-yellowHi tracking-widest">
+          <span class="inline-block w-2 h-2 bg-retro-greenLoad border border-retro-black animate-pulse"></span>
+          ★ CRYPTONX&apos;26 IS LIVE! ★ TAP TO EXPLORE →
+        </span>
+        <span class="flex items-center gap-3 px-4 font-pixel text-[10px] sm:text-[11px] text-retro-yellowHi tracking-widest">
+          <span class="inline-block w-2 h-2 bg-retro-greenLoad border border-retro-black animate-pulse"></span>
+          ★ CRYPTONX&apos;26 IS LIVE! ★ TAP TO EXPLORE →
+        </span>
+        <span class="flex items-center gap-3 px-4 font-pixel text-[10px] sm:text-[11px] text-retro-yellowHi tracking-widest">
+          <span class="inline-block w-2 h-2 bg-retro-greenLoad border border-retro-black animate-pulse"></span>
+          ★ CRYPTONX&apos;26 IS LIVE! ★ TAP TO EXPLORE →
+        </span>
+      </div>
+    </div>
+  </a>
 
   <!-- 100% Screen-Fit Background Container with Image -->
   <div class="screen-bg">
@@ -385,9 +453,9 @@
   <footer class="fixed bottom-0 left-0 w-full h-12 bg-retro-taskbar border-t-2 border-retro-black flex items-center justify-between px-2 z-50">
     <div class="flex items-center gap-2">
       <!-- CryptonX Button -->
-      <a href="https://cryptonx.in" target="_blank" rel="noopener noreferrer" class="bg-retro-green text-retro-white border-2 border-retro-black shadow-pixel-sm px-3 py-1 font-pixel text-[10px] flex items-center gap-2 hover:bg-retro-greenLoad active:translate-y-px active:shadow-none transition-all">
+      <a href="https://cryptonx.in" target="_blank" rel="noopener noreferrer" class="cx-taskbar-btn bg-retro-green text-retro-white border-2 border-retro-black px-3 py-1 font-pixel text-[10px] flex items-center gap-2 hover:bg-retro-greenLoad active:translate-y-px active:shadow-none transition-colors">
         <div class="w-3 h-3 bg-retro-white border border-retro-black flex items-center justify-center">
-          <div class="w-1.5 h-1.5 bg-retro-charcoal"></div>
+          <div class="w-1.5 h-1.5 bg-retro-charcoal animate-pulse"></div>
         </div>
         CryptonX
       </a>
