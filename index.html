@@ -1,632 +1,426 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechnoCrats GSV</title>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Sekuya&family=JetBrains+Mono:wght@400;500;700&display=swap"
-    rel="stylesheet"
-  />
+  <title>TECHNOCRATS GSV // DESKTOP.EXE</title>
+  
+  <!-- Retro Pixel Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'monospace'],
+            vt: ['"VT323"', 'monospace']
+          },
+          colors: {
+            retro: {
+              cream: '#FBF0DD',
+              sky: '#5FA8E0',
+              skyDeep: '#3E7FBF',
+              slate: '#AFC0CE',
+              taskbar: '#C6C6C6',
+              black: '#161616',
+              white: '#F5F5F0',
+              grey: '#8C8C8C',
+              charcoal: '#1A1A1A',
+              yellow: '#F4D53E',
+              yellowHi: '#FBE98A',
+              yellowShadow: '#C9A61E',
+              blue: '#2E9FE0',
+              blueDeep: '#1C6FA8',
+              teal: '#7FB8B0',
+              green: '#6E8E4F',
+              greenShadow: '#4F6838',
+              greenLoad: '#5FBF4F',
+              orange: '#F2941F',
+              magenta: '#C25FA0'
+            }
+          },
+          boxShadow: {
+            'pixel': '4px 4px 0px 0px #161616',
+            'pixel-sm': '2px 2px 0px 0px #161616',
+            'pixel-inner': 'inset 2px 2px 0px 0px #8C8C8C, inset -2px -2px 0px 0px #F5F5F0'
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
-    :root {
-      --tc-bg: #0d0f0e;
-      --tc-grid: rgba(208, 74, 58, 0.055);
-      --tc-border: rgba(184, 148, 82, 0.28);
-      --tc-heading: #f1eee6;
-      --tc-red: #d04a3a;
-      --tc-gold: #b89452;
-      --tc-muted: rgba(241, 238, 230, 0.42);
-    }
-
     * {
-      box-sizing: border-box;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      border-radius: 0 !important; /* Force blocky shapes */
     }
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
+    html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      background-color: #060a14; /* Fallback for image */
+      color: #161616;
     }
 
-    body {
-      position: relative;
+    /* Fixed 100% Screen-Fit Background Container */
+    .screen-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
-      min-height: 100vh;
+      z-index: 0;
+      pointer-events: none;
       overflow: hidden;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background-color: var(--tc-bg);
-
-      background-image:
-        repeating-linear-gradient(
-          0deg,
-          var(--tc-grid) 0px,
-          var(--tc-grid) 1px,
-          transparent 1px,
-          transparent 40px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          var(--tc-grid) 0px,
-          var(--tc-grid) 1px,
-          transparent 1px,
-          transparent 40px
-        );
-
-      font-family: "JetBrains Mono", monospace;
-      color: var(--tc-heading);
     }
 
-    /* =========================================
-       OUTER FRAME
-    ========================================= */
-
-    .tc-frame {
-      position: absolute;
-      inset: 12px;
-
-      border: 1px solid var(--tc-border);
-      border-radius: 16px;
-
-      pointer-events: none;
-    }
-
-    .tc-frame::before,
-    .tc-frame::after {
-      content: "";
-
-      position: absolute;
-
-      width: 70px;
-      height: 70px;
-
-      border-color: var(--tc-gold);
-      opacity: 0.6;
-    }
-
-    .tc-frame::before {
-      top: -1px;
-      left: -1px;
-
-      border-top: 1px solid;
-      border-left: 1px solid;
-
-      border-radius: 16px 0 0 0;
-    }
-
-    .tc-frame::after {
-      right: -1px;
-      bottom: -1px;
-
-      border-right: 1px solid;
-      border-bottom: 1px solid;
-
-      border-radius: 0 0 16px 0;
-    }
-
-    /* =========================================
-       CORNER SYMBOLS
-    ========================================= */
-
-    .tc-corner {
-      position: absolute;
-
-      z-index: 5;
-
-      font-family: "JetBrains Mono", monospace;
-      font-weight: 700;
-
-      user-select: none;
-      pointer-events: none;
-    }
-
-    .tc-tl {
-      top: 28px;
-      left: 34px;
-
-      color: var(--tc-red);
-      font-size: clamp(16px, 1.8vw, 28px);
-
-      opacity: 0.75;
-    }
-
-    .tc-tr {
-      top: 28px;
-      right: 34px;
-
-      color: var(--tc-gold);
-      font-size: clamp(13px, 1.3vw, 21px);
-
-      opacity: 0.5;
-    }
-
-    .tc-bl {
-      bottom: 27px;
-      left: 34px;
-
-      color: var(--tc-red);
-      font-size: clamp(13px, 1.3vw, 21px);
-
-      opacity: 0.45;
-    }
-
-    .tc-br {
-      right: 34px;
-      bottom: 27px;
-
-      color: var(--tc-gold);
-      font-size: clamp(16px, 1.8vw, 28px);
-
-      opacity: 0.75;
-    }
-
-    /* =========================================
-       SIDE LABELS
-    ========================================= */
-
-    .tc-code {
-      position: absolute;
-
-      top: 50%;
-
-      z-index: 2;
-
-      font-size: clamp(7px, 0.65vw, 11px);
-      letter-spacing: 2px;
-
-      color: var(--tc-muted);
-
-      opacity: 0.3;
-
-      writing-mode: vertical-rl;
-
-      transform: translateY(-50%);
-    }
-
-    .tc-code-left {
-      left: 22px;
-    }
-
-    .tc-code-right {
-      right: 22px;
-
-      transform:
-        translateY(-50%)
-        rotate(180deg);
-    }
-
-    /* =========================================
-       CENTER CONTENT
-    ========================================= */
-
-    .tc-content {
-      position: relative;
-
-      z-index: 10;
-
-      width: min(90vw, 1200px);
-
-      text-align: center;
-    }
-
-    /* Status */
-
-    .tc-status {
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      gap: 10px;
-
-      margin-bottom: clamp(14px, 2vh, 24px);
-
-      color: var(--tc-muted);
-
-      font-size: clamp(9px, 0.8vw, 14px);
-
-      letter-spacing: clamp(2px, 0.35vw, 5px);
-
-      text-transform: uppercase;
-    }
-
-    .tc-status-dot {
-      width: 7px;
-      height: 7px;
-
-      flex-shrink: 0;
-
-      border-radius: 50%;
-
-      background: var(--tc-red);
-
-      box-shadow:
-        0 0 8px rgba(208, 74, 58, 0.8),
-        0 0 20px rgba(208, 74, 58, 0.25);
-    }
-
-    /* =========================================
-       MAIN TITLE
-    ========================================= */
-
-    h1 {
-      margin: 0;
-
-      font-family: "Sekuya", sans-serif;
-
-      font-size: clamp(
-        34px,
-        6.2vw,
-        108px
-      );
-
-      font-weight: 400;
-
-      line-height: 1;
-
-      letter-spacing: clamp(
-        -1px,
-        -0.15vw,
-        -3px
-      );
-
-      color: var(--tc-heading);
-
-      text-transform: uppercase;
-
-      text-shadow:
-        0 0 30px rgba(184, 148, 82, 0.08);
-    }
-
-    /* =========================================
-       SUBTITLE
-    ========================================= */
-
-    .tc-subtitle {
-      margin-top: clamp(14px, 2vh, 24px);
-
-      color: var(--tc-gold);
-
-      font-size: clamp(8px, 0.75vw, 13px);
-
-      letter-spacing: clamp(
-        2px,
-        0.35vw,
-        5px
-      );
-
-      text-transform: uppercase;
-
-      opacity: 0.72;
-    }
-
-    /* =========================================
-       DECORATIVE CENTER LINE
-    ========================================= */
-
-    .tc-line {
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      gap: 12px;
-
-      margin-top: clamp(20px, 3vh, 36px);
-    }
-
-    .tc-line span {
+    .screen-bg img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: fill; /* Stretches and locks 100% to screen width & height */
       display: block;
+    }
 
-      width: clamp(30px, 5vw, 90px);
-      height: 1px;
+    /* Interactive Retro Button */
+    .retro-btn {
+      transition: transform 0.1s;
+    }
+    .retro-btn:hover {
+      background-color: #FBE98A;
+    }
+    .retro-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px 0px #161616 !important;
+    }
 
+    .scanlines {
       background: linear-gradient(
-        90deg,
-        transparent,
-        var(--tc-border)
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.15) 50%
       );
-    }
-
-    .tc-line span:last-child {
-      background: linear-gradient(
-        90deg,
-        var(--tc-border),
-        transparent
-      );
-    }
-
-    .tc-line-dot {
-      width: 4px;
-      height: 4px;
-
-      border-radius: 50%;
-
-      background: var(--tc-gold);
-
-      opacity: 0.6;
-    }
-
-    /* =========================================
-       FOOTER
-    ========================================= */
-
-    .tc-footer {
-      position: absolute;
-
-      left: 0;
-      right: 0;
-      bottom: clamp(28px, 4vh, 50px);
-
-      z-index: 20;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      gap: clamp(18px, 2.5vw, 40px);
-    }
-
-    .tc-footer::before {
-      content: "";
-
-      position: absolute;
-
-      top: clamp(-18px, -2vh, -10px);
-
-      width: clamp(80px, 12vw, 180px);
-      height: 1px;
-
-      background: linear-gradient(
-        90deg,
-        transparent,
-        var(--tc-border),
-        transparent
-      );
-    }
-
-    .tc-social {
-      position: relative;
-
-      color: var(--tc-muted);
-
-      text-decoration: none;
-
-      font-size: clamp(8px, 0.7vw, 12px);
-
-      letter-spacing: clamp(
-        1px,
-        0.2vw,
-        3px
-      );
-
-      transition:
-        color 0.25s ease,
-        transform 0.25s ease;
-    }
-
-    .tc-social:hover {
-      color: var(--tc-gold);
-
-      transform: translateY(-2px);
-    }
-
-    .tc-social:not(:last-child)::after {
-      content: "/";
-
-      position: absolute;
-
-      right: clamp(-14px, -1vw, -8px);
-
-      color: rgba(184, 148, 82, 0.3);
-
+      background-size: 100% 4px;
       pointer-events: none;
     }
 
-    /* =========================================
-       RESPONSIVE
-    ========================================= */
-
-    @media (max-width: 700px) {
-
-      .tc-frame {
-        inset: 8px;
-        border-radius: 10px;
-      }
-
-      .tc-tl {
-        top: 18px;
-        left: 20px;
-      }
-
-      .tc-tr {
-        top: 18px;
-        right: 20px;
-      }
-
-      .tc-bl {
-        bottom: 18px;
-        left: 20px;
-      }
-
-      .tc-br {
-        right: 20px;
-        bottom: 18px;
-      }
-
-      .tc-code {
-        display: none;
-      }
-
-      .tc-content {
-        width: 92vw;
-      }
-
-      h1 {
-        font-size: clamp(
-          28px,
-          9vw,
-          60px
-        );
-
-        letter-spacing: -1px;
-      }
-
-      .tc-subtitle {
-        letter-spacing: 2px;
-      }
-
-      .tc-footer {
-        bottom: 28px;
-        gap: 16px;
-      }
+    @keyframes loadPulse {
+      0% { width: 10%; }
+      50% { width: 80%; }
+      100% { width: 100%; }
     }
-
-    @media (max-width: 420px) {
-
-      .tc-status {
-        font-size: 8px;
-        letter-spacing: 2px;
-      }
-
-      h1 {
-        font-size: clamp(
-          25px,
-          10vw,
-          42px
-        );
-      }
-
-      .tc-subtitle {
-        font-size: 7px;
-        letter-spacing: 1.5px;
-      }
-
-      .tc-social {
-        font-size: 7px;
-        letter-spacing: 1px;
-      }
-    }
-
-    /* =========================================
-       REDUCED MOTION
-    ========================================= */
-
-    @media (prefers-reduced-motion: reduce) {
-      .tc-social {
-        transition: none;
-      }
+    .loading-progress {
+      animation: loadPulse 2.5s steps(10) infinite;
     }
   </style>
 </head>
+<body class=
 
-<body>
+"font-vt relative pb-20 overflow-x-hidden selection:bg-retro-blue selection:text-retro-white">
 
-  <!-- =======================================
-       FRAME
-  ======================================== -->
+  <!-- 100% Screen-Fit Background Container with Image -->
+  <div class="screen-bg">
+    <img src="ascii-magic-1.jpg" alt="GSV Background" />
+    <div class="absolute inset-0 bg-retro-skyDeep/40 mix-blend-multiply"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-retro-skyDeep/60 to-retro-charcoal/80"></div>
+    <div class="absolute inset-0 scanlines"></div>
+  </div>
 
-  <div class="tc-frame"></div>
+  <!-- Main Container (Desktop Area) -->
+  <main class="w-full max-w-xl mx-auto mt-6 px-4 flex flex-col items-center z-10 relative space-y-6">
 
-  <!-- =======================================
-       CORNERS
-  ======================================== -->
-
-  <span class="tc-corner tc-tl">&lt;/&gt;</span>
-
-  <span class="tc-corner tc-tr">
-    { }
-  </span>
-
-  <span class="tc-corner tc-bl">
-    ;
-  </span>
-
-  <span class="tc-corner tc-br">&lt;/&gt;</span>
-
-  <!-- =======================================
-       SIDE IDENTIFIERS
-  ======================================== -->
-
-  <span class="tc-code tc-code-left">
-    TECHN0CRATS.GSV
-  </span>
-
-  <span class="tc-code tc-code-right">
-    CRYPTONX_26
-  </span>
-
-  <!-- =======================================
-       CENTER
-  ======================================== -->
-
-  <main class="tc-content">
-
-    <div class="tc-status">
-      <span class="tc-status-dot"></span>
-      SYSTEM ONLINE
+    <!-- HEADER WINDOW -->
+    <div class="w-full bg-retro-cream border-2 border-retro-black shadow-pixel flex flex-col">
+      <!-- Title Bar -->
+      <div class="bg-retro-blue border-b-2 border-retro-black px-3 py-1.5 flex items-center justify-between">
+        <span class="font-pixel text-[10px] text-retro-white tracking-widest">TECHNOCRATS_SYSTEM.EXE</span>
+        <div class="flex gap-1">
+          <div class="w-3 h-3 bg-retro-taskbar border border-retro-black flex items-center justify-center font-pixel text-[8px] text-retro-black">_</div>
+          <div class="w-3 h-3 bg-retro-taskbar border border-retro-black flex items-center justify-center font-pixel text-[8px] text-retro-black">[]</div>
+          <div class="w-3 h-3 bg-retro-taskbar border border-retro-black flex items-center justify-center font-pixel text-[8px] text-retro-black">X</div>
+        </div>
+      </div>
+      
+      <!-- Window Content -->
+      <div class="p-6 flex flex-col items-center text-center">
+        <div class="w-20 h-20 bg-retro-white border-2 border-retro-black shadow-pixel-sm p-1.5 mb-4">
+          <img src="logo.png" alt="Logo" class="w-full h-full object-contain" />
+        </div>
+        <h1 class="font-pixel text-xl sm:text-2xl text-retro-black mb-1">TECHNOCRATS</h1>
+        <p class="text-xl text-retro-grey uppercase tracking-widest font-bold">Gati Shakti Vishwavidyalaya</p>
+      </div>
     </div>
 
-    <h1>
-      TechnoCrats GSV
-    </h1>
-
-    <div class="tc-subtitle">
-      Building · Breaking · Innovating
+    <!-- METRICS WINDOW -->
+    <div class="w-full bg-retro-cream border-2 border-retro-black shadow-pixel flex flex-col">
+      <div class="bg-retro-charcoal border-b-2 border-retro-black px-3 py-1.5 flex items-center justify-between">
+        <span class="font-pixel text-[10px] text-retro-white">IMPACT_METRICS.DAT</span>
+        <span class="text-retro-greenLoad animate-pulse text-sm">● LIVE</span>
+      </div>
+      
+      <div class="p-4 grid grid-cols-2 gap-4 bg-retro-cream">
+        <!-- Stat Boxes -->
+        <div class="bg-retro-white border-2 border-retro-black shadow-pixel-sm p-3 text-center">
+          <div class="font-pixel text-xl text-retro-blue">
+            <span class="counter" data-target="35">0</span>+
+          </div>
+          <div class="text-base font-bold leading-tight mt-1 text-retro-black">Events</div>
+        </div>
+        <div class="bg-retro-white border-2 border-retro-black shadow-pixel-sm p-3 text-center">
+          <div class="font-pixel text-xl text-retro-green">
+            <span class="counter" data-target="1500">0</span>+
+          </div>
+          <div class="text-base font-bold leading-tight mt-1 text-retro-black">Registrations</div>
+        </div>
+        <div class="bg-retro-white border-2 border-retro-black shadow-pixel-sm p-3 text-center">
+          <div class="font-pixel text-xl text-retro-orange">
+            <span class="counter" data-target="20">0</span>+
+          </div>
+          <div class="text-base font-bold leading-tight mt-1 text-retro-black">Hands-on Sessions</div>
+        </div>
+        <div class="bg-retro-white border-2 border-retro-black shadow-pixel-sm p-3 text-center">
+          <div class="font-pixel text-xl text-retro-magenta">
+            <span class="counter" data-target="50">0</span>+
+          </div>
+          <div class="text-base font-bold leading-tight mt-1 text-retro-black">Active Members</div>
+        </div>
+      </div>
     </div>
 
-    <div class="tc-line">
-      <span></span>
-      <div class="tc-line-dot"></div>
-      <span></span>
+    <!-- DESKTOP FOLDERS (Links) -->
+    <div class="w-full space-y-4">
+      <a href="https://share.google/OslbTVAG0usMwDdJ9" target="_blank" class="retro-btn block w-full bg-retro-yellow border-2 border-retro-black shadow-pixel p-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-retro-white border-2 border-retro-black flex items-center justify-center shadow-pixel-sm text-retro-blue">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.63 1.63 0 1 0 0 3.25 1.63 1.63 0 0 0 0-3.25z"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="font-pixel text-[11px] text-retro-black">LINKEDIN.EXE</div>
+            <div class="text-sm text-retro-charcoal">Official Club Network</div>
+          </div>
+        </div>
+        <span class="text-2xl text-retro-black font-bold">►</span>
+      </a>
+
+      <a href="https://www.instagram.com/technocrats.gsv" target="_blank" class="retro-btn block w-full bg-retro-yellow border-2 border-retro-black shadow-pixel p-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-retro-white border-2 border-retro-black flex items-center justify-center shadow-pixel-sm text-retro-magenta">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="font-pixel text-[11px] text-retro-black">INSTAGRAM.EXE</div>
+            <div class="text-sm text-retro-charcoal">@technocrats.gsv</div>
+          </div>
+        </div>
+        <span class="text-2xl text-retro-black font-bold">►</span>
+      </a>
+
+      <a href="https://www.instagram.com/robotics.gsv" target="_blank" class="retro-btn block w-full bg-retro-yellow border-2 border-retro-black shadow-pixel p-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-retro-white border-2 border-retro-black flex items-center justify-center shadow-pixel-sm text-retro-magenta">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="font-pixel text-[11px] text-retro-black">INSTAGRAM.EXE</div>
+            <div class="text-sm text-retro-charcoal">@robotics.gsv</div>
+          </div>
+        </div>
+        <span class="text-2xl text-retro-black font-bold">►</span>
+      </a>
+
+      <a href="https://github.com/technocratsgsv" target="_blank" class="retro-btn block w-full bg-retro-yellow border-2 border-retro-black shadow-pixel p-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-retro-white border-2 border-retro-black flex items-center justify-center shadow-pixel-sm text-retro-black">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="font-pixel text-[11px] text-retro-black">GITHUB_ORG.EXE</div>
+            <div class="text-sm text-retro-charcoal">Open Source Repos</div>
+          </div>
+        </div>
+        <span class="text-2xl text-retro-black font-bold">►</span>
+      </a>
+    </div>
+
+    <!-- PROGRAMMING DOMAIN -->
+    <div class="w-full bg-retro-cream border-2 border-retro-black shadow-pixel flex flex-col">
+      <div class="bg-retro-blue border-b-2 border-retro-black px-3 py-1.5">
+        <span class="font-pixel text-[10px] text-retro-white">C:\PROGRAMMING_DOMAIN</span>
+      </div>
+      <div class="p-4">
+        <p class="text-lg text-retro-charcoal mb-4 leading-snug">
+          The coding & software wing of Technocrats. Takes students from syntax fundamentals to shipping real projects, algorithmic problem-solving, and competitive hackathons.
+        </p>
+        <div class="space-y-3">
+          <div class="bg-retro-white border-2 border-retro-black p-2.5 shadow-pixel-sm">
+            <div class="font-pixel text-[10px] text-retro-blue mb-1">CODESTORM</div>
+            <p class="text-base text-retro-black leading-tight">Two-round inter-branch competition featuring quiz, competitive coding & mini-hackathon.</p>
+          </div>
+          <div class="bg-retro-white border-2 border-retro-black p-2.5 shadow-pixel-sm">
+            <div class="font-pixel text-[10px] text-retro-blue mb-1">CIPHER SAGA</div>
+            <p class="text-base text-retro-black leading-tight">Flagship cryptic hunt run during EPITOME with staggered leads & QR-drop rounds.</p>
+          </div>
+          <div class="bg-retro-white border-2 border-retro-black p-2.5 shadow-pixel-sm">
+            <div class="font-pixel text-[10px] text-retro-blue mb-1">ACTIVE PLATFORMS</div>
+            <p class="text-base text-retro-black leading-tight">Building GSV Connect, GSV Sports Portal, DSA Problem series & Robonity ecosystem.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE DEVELOPMENT DOMAIN -->
+    <div class="w-full bg-retro-cream border-2 border-retro-black shadow-pixel flex flex-col">
+      <div class="bg-retro-magenta border-b-2 border-retro-black px-3 py-1.5">
+        <span class="font-pixel text-[10px] text-retro-white">C:\PROFILE_DEV_DOMAIN</span>
+      </div>
+      <div class="p-4">
+        <p class="text-lg text-retro-charcoal mb-4 leading-snug">
+          Bridges the gap between academics and industry through career readiness, public speaking, case study analysis, LinkedIn branding, and technical LaTeX documentation.
+        </p>
+        <div class="space-y-3">
+          <div class="bg-retro-white border-2 border-retro-black p-2.5 shadow-pixel-sm">
+            <div class="font-pixel text-[10px] text-retro-magenta mb-1">CASE COMPETITIONS</div>
+            <p class="text-base text-retro-black leading-tight">Data-driven urban logistics and consulting problem solving with real constraints.</p>
+          </div>
+          <div class="bg-retro-white border-2 border-retro-black p-2.5 shadow-pixel-sm">
+            <div class="font-pixel text-[10px] text-retro-magenta mb-1">LATEX & REPORTS</div>
+            <p class="text-base text-retro-black leading-tight">Industry standard documentation workshops for internships, research, and papers.</p>
+          </div>
+          <div class="bg-retro-white border-2 border-retro-black p-2.5 shadow-pixel-sm">
+            <div class="font-pixel text-[10px] text-retro-magenta mb-1">INTERACTIVE LEARNING</div>
+            <p class="text-base text-retro-black leading-tight">BrainBytes, Reverse Engineering, LinkedIn Optimization & Pitching challenges.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROBOTICS & ENGINEERING DRAWING DOMAIN -->
+    <div class="w-full bg-retro-cream border-2 border-retro-black shadow-pixel flex flex-col">
+      <div class="bg-retro-orange border-b-2 border-retro-black px-3 py-1.5">
+        <span class="font-pixel text-[10px] text-retro-white">C:\ROBOTICS_AND_ENGINEERING_DRAWING</span>
+      </div>
+      <div class="p-4">
+        <!-- <h2 class="font-pixel text-sm text-retro-orange mb-3">ROBOTICS & ENGINEERING DRAWING DOMAIN</h2> -->
+        <p class="text-lg text-retro-charcoal mb-4 leading-snug">
+          The domain aims to conduct workshops, hands-on sessions and exciting competitions to enhance the competency of students with electronics and engineering drawing tools like CAD etc.
+        </p>
+        <div class="space-y-3">
+          <div class="bg-retro-white border-2 border-retro-black p-2.5 shadow-pixel-sm">
+            <div class="font-pixel text-[10px] text-retro-orange mb-1">ROBOWARS & ROBOSOCCER</div>
+            <p class="text-base text-retro-black leading-tight">5+ Major Events including RoboWars 1.0, RoboWars 2.0, and RoboSoccer.</p>
+          </div>
+          <div class="bg-retro-white border-2 border-retro-black p-2.5 shadow-pixel-sm">
+            <div class="font-pixel text-[10px] text-retro-orange mb-1">AALEKHAN & ONSHAPE</div>
+            <p class="text-base text-retro-black leading-tight">Hands-on workshops mastering engineering drawing tools and CAD design.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROBONITY INITIATIVES -->
+    <div class="w-full bg-retro-cream border-2 border-retro-black shadow-pixel flex flex-col mb-4">
+      <div class="bg-retro-teal border-b-2 border-retro-black px-3 py-1.5">
+        <span class="font-pixel text-[10px] text-retro-white">C:\ROBO_INITIATIVES</span>
+      </div>
+      <div class="p-4">
+        <p class="text-lg text-retro-charcoal mb-4 leading-snug">
+          The premier robotics & engineering community platform. Build, share, compete and innovate with autonomous UGVs and rovers.
+        </p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a href="https://robonity-gsv.vercel.app/" target="_blank" class="retro-btn block bg-retro-white border-2 border-retro-black p-3 shadow-pixel-sm text-center">
+            <div class="font-pixel text-[10px] text-retro-teal mb-2">ROBONITY MAIN</div>
+            <p class="text-sm text-retro-black leading-tight">Autonomous Projects, Forum, SWARM-X & ARES-ROVER</p>
+          </a>
+          
+          <a href="https://robonity-roboshare-gsv.vercel.app/" target="_blank" class="retro-btn block bg-retro-white border-2 border-retro-black p-3 shadow-pixel-sm text-center">
+            <div class="font-pixel text-[10px] text-retro-teal mb-2">ROBOSHARE APP</div>
+            <p class="text-sm text-retro-black leading-tight">Robotics knowledge base, components & hardware sharing</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Retro Loading Bar -->
+    <div class="w-full flex flex-col items-center gap-2 mb-6">
+      <span class="font-pixel text-[8px] text-retro-black bg-retro-cream px-2 py-1 border-2 border-retro-black">SYSTEM_READY: 100%</span>
+      <div class="w-64 h-6 bg-retro-white border-2 border-retro-black shadow-pixel-sm p-1">
+        <div class="loading-progress h-full bg-retro-greenLoad"></div>
+      </div>
+    </div>
+
+    <!-- Re-added Credits Footer -->
+    <div class="w-full bg-retro-cream border-2 border-retro-black shadow-pixel p-3 mb-10 text-center space-y-1.5">
+      <div class="font-pixel text-[8px] sm:text-[9px] text-retro-charcoal">TECHNOCRATS • GATI SHAKTI VISHWAVIDYALAYA</div>
+      <a href="https://www.linkedin.com/in/rudransh-mishra-3547872a0/" target="_blank" rel="noopener noreferrer" class="font-pixel text-[8px] sm:text-[9px] text-retro-blueDeep inline-flex items-center gap-1.5">
+        <span class="hover:underline">MADE BY RUDRANSH MISHRA</span>
+        <svg viewBox="0 0 5 5" class="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current shrink-0" shape-rendering="crispEdges">
+          <rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/>
+          <rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/>
+          <rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/>
+          <rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/>
+          <rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/>
+        </svg>
+      </a>
     </div>
 
   </main>
 
-  <!-- =======================================
-       SOCIAL FOOTER
-  ======================================== -->
-
-  <footer class="tc-footer">
-
-    <a
-      class="tc-social"
-      href="https://www.instagram.com/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      INSTAGRAM
-    </a>
-
-    <a
-      class="tc-social"
-      href="https://www.linkedin.com/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      LINKEDIN
-    </a>
-
-    <a
-      class="tc-social"
-      href="https://github.com/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      GITHUB
-    </a>
-
+  <!-- RETRO TASKBAR -->
+  <footer class="fixed bottom-0 left-0 w-full h-12 bg-retro-taskbar border-t-2 border-retro-black flex items-center justify-between px-2 z-50">
+    <div class="flex items-center gap-2">
+      <!-- CryptonX Button -->
+      <a href="https://cryptonx.in" target="_blank" rel="noopener noreferrer" class="bg-retro-green text-retro-white border-2 border-retro-black shadow-pixel-sm px-3 py-1 font-pixel text-[10px] flex items-center gap-2 hover:bg-retro-greenLoad active:translate-y-px active:shadow-none transition-all">
+        <div class="w-3 h-3 bg-retro-white border border-retro-black flex items-center justify-center">
+          <div class="w-1.5 h-1.5 bg-retro-charcoal"></div>
+        </div>
+        CryptonX
+      </a>
+      <div class="hidden sm:block border-l-2 border-retro-grey h-8 mx-2"></div>
+      <span class="hidden sm:inline font-vt text-lg text-retro-charcoal">Gati Shakti Vishwavidyalaya</span>
+    </div>
+    
+    <!-- System Tray -->
+    <div class="flex items-center gap-4 bg-retro-white border-2 border-retro-black px-3 py-1 shadow-pixel-inner">
+      <span class="font-vt text-lg text-retro-black font-bold">2026_EDITION</span>
+    </div>
   </footer>
 
+  <!-- Number Count-Up Animation Script -->
+  <script>
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      let count = 0;
+      const speed = target > 500 ? 15 : 40;
+      const step = Math.ceil(target / speed);
+      
+      const updateCount = () => {
+        count += step;
+        if (count < target) {
+          counter.innerText = count;
+          setTimeout(updateCount, 25);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    });
+  </script>
 </body>
 </html>
